@@ -77,7 +77,7 @@ def delete():
             endpoint,
             data=kv_dct
         )
-    if chk_respoinse(r):
+    if chk_response(r):
         with MySQLdb.connect(**DB_INFO) as cursor:
             cursor.execute('DELETE FROM ssh WHERE id=%s;',
                            (kv_dct['id'],))
@@ -105,7 +105,7 @@ def mod():
             data=kv_dct
         )
     if chk_response(r):
-        with MySQLdb.connect(**db_info) as cursor:
+        with MySQLdb.connect(**DB_INFO) as cursor:
             cursor.execute('UPDATE ssh SET publickey=%s WHERE id=%s;',
                            (kv_dct['publickey'], kv_dct['id']))
     body['message'] = r.text
