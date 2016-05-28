@@ -27,7 +27,7 @@ def index():
     return 'THIS IS API ROOT'
 
 
-@post('/ssh/add')
+@post('/add')
 def add():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'publickey', 'apikey']
@@ -60,7 +60,7 @@ def add():
     return res
 
 
-@post('/ssh/delete')
+@post('/delete')
 def delete():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'apikey']
@@ -85,7 +85,7 @@ def delete():
     return res
 
 
-@post('/ssh/mod')
+@post('/mod')
 def mod():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'publickey', 'apikey']
@@ -110,7 +110,7 @@ def mod():
     return res
 
 
-@post('/ssh/fetch')
+@post('/fetch')
 def fetch():
     id_ = request.forms.get('id')
     if id_ is None:
@@ -132,7 +132,7 @@ def fetch():
     return res
 
 
-@post('/ssh/isavail')
+@post('/isavail')
 def isavail():
     endpoint = 'http://ssh.charakoba.com/api/check'
     required = ['username', 'apikey']
