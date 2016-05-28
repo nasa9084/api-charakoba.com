@@ -20,7 +20,7 @@ res.body = dict()
 
 app = Bottle()
 post = app.post
-
+delete = app.delete
 
 @post('/')
 def index():
@@ -60,7 +60,7 @@ def add():
     return res
 
 
-@post('/delete')
+@delete('/')
 def delete():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'apikey']
