@@ -126,7 +126,7 @@ def fetch():
         r = cursor.fetchone()
         if r:
             keys = ['id', 'user', 'publickey', 'updated_at']
-            for k in keys:
+            for k, v in zip(keys, r):
                 if isinstance(v, datetime.datetime):
                     body[k] = v.strftime('%Y-%m-%d %H:%M:%S')
                 else:
