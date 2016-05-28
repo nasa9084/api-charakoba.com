@@ -16,7 +16,7 @@ MSG_ACCOUNT_EXISTS = 'account exists.'
 MSG_REQUIRED = '{0} is required.'
 
 res = HTTPResponse()
-res.body = dict()
+body = dict()
 
 app = Bottle()
 post = app.post
@@ -34,14 +34,16 @@ def add():
             kv_dct[key] = request.forms.get(key)
         else:
             res.status = 400
-            res.body['message'] = MSG_REQUIRED.format(key)
+            body['message'] = MSG_REQUIRED.format(key)
+            res.body = body
             return res
     with MySQLdb.connect(**DB_INFO) as cursor:
         cursor.execute('SELECT * FROM ssh WHERE id=%s;', (kv_dct['id'],))
         record = cursor.fetchone()
         if record:
             res.status = 400
-            res.body['message'] = MSG_ACCOUNT_EXISTS
+            body['message'] = MSG_ACCOUNT_EXISTS
+            res.body = body
             return res
         else:
             r = requests.post(
@@ -52,7 +54,8 @@ def add():
                 cursor.execute(
                     'INSERT INTO ssh(id, user, publickey) VALUES(%s, %s, %s);',
                     (kv_dct['id'], kv_dct['username'], kv_dct['publickey']))
-    res.body['message'] = r.text
+    body['message'] = r.text
+    res.body = body
     return res
 
 
@@ -66,7 +69,8 @@ def delete():
             kv_dct[key] = request.forms.get(key)
         else:
             res.status = 400
-            res.body['message'] = MSG_REQUIRED.format(key)
+            body['message'] = MSG_REQUIRED.format(key)
+            res.body = body
             return res
     kv_dct['mode'] = 'del'
     r = requests.post(
@@ -77,7 +81,8 @@ def delete():
         with MySQLdb.connect(**DB_INFO) as cursor:
             cursor.execute('DELETE FROM ssh WHERE id=%s;',
                            (kv_dct['id'],))
-    res.body['message'] = r.text
+    body['message'] = r.text
+    res.body = body
     return res
 
 
@@ -91,7 +96,8 @@ def mod():
             kv_dct[key] = request.forms.get(key)
         else:
             res.status = 400
-            res.body['message'] = MSG_REQUIRED.format(key)
+            body['message'] = MSG_REQUIRED.format(key)
+            res.body = body
             return res
     kv_dct['mode'] = 'mod'
     r = requests.post(
@@ -102,7 +108,8 @@ def mod():
         with MySQLdb.connect(**db_info) as cursor:
             cursor.execute('UPDATE ssh SET publickey=%s WHERE id=%s;',
                            (kv_dct['publickey'], kv_dct['id']))
-    res.body['message'] = r.text
+    body['message'] = r.text
+    res.body = body
     return res
 
 
@@ -111,20 +118,22 @@ def fetch():
     id_ = request.forms.get('id')
     if id_ is None:
         res.status = 400
-        res.body['message'] = MSG_REQUIRED.format('id')
+        body['message'] = MSG_REQUIRED.format('id')
+        res.body = body
         return res
     with MySQLdb.connect(**DB_INFO) as cursor:
         cursor.execute('SELECT * FROM ssh WHERE id=%s;', (id_,))
         r = cursor.fetchone()
         if r:
             keys = ['id', 'user', 'publickey', 'updated_at']
-            for k, v in zip(keys, r):
+            for k in keys:
                 if isinstance(v, datetime.datetime):
-                    res.body[k] = v.strftime('%Y-%m-%d %H:%M:%S')
+                    body[k] = v.strftime('%Y-%m-%d %H:%M:%S')
                 else:
-                    res.body[k] = v
+                    body[k] = v
         else:
-            res.body['message'] = 'No Record.'
+            body['message'] = 'No Record.'
+    res.body = body
     return res
 
 
@@ -138,17 +147,19 @@ def isavail():
             kv_dct[key] = request.forms.get(key)
         else:
             res.status = 400
-            res.body['message'] = MSG_REQUIRED.format(key)
+            body['message'] = MSG_REQUIRED.format(key)
+            res.body = body
             return res
-    res.body['username'] = kv_dct['username']
+    body['username'] = kv_dct['username']
     r = requests.post(
             endpoint,
             data=kv_dct,
         )
     if r.text != 'Present' and r.status_code == 200:
-        res.body['isavailable'] = 'available'
+        body['isavailable'] = 'available'
     else:
-        res.body['isavailable'] = 'unavailable'
+        body['isavailable'] = 'unavailable'
+    res.body = body
     return res
 
 
