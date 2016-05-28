@@ -24,11 +24,6 @@ delete = app.delete
 put = app.put
 
 @post('/')
-def index():
-    return 'THIS IS API ROOT'
-
-
-@post('/add')
 def add():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'publickey', 'apikey']
