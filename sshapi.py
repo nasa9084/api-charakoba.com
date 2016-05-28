@@ -21,6 +21,7 @@ res.body = dict()
 app = Bottle()
 post = app.post
 delete = app.delete
+put = app.put
 
 @post('/')
 def index():
@@ -85,7 +86,7 @@ def delete():
     return res
 
 
-@post('/mod')
+@put('/')
 def mod():
     endpoint = 'http://ssh.charakoba.com/api/'
     required = ['username', 'id', 'publickey', 'apikey']
