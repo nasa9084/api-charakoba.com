@@ -7,6 +7,7 @@ import json
 app = Bottle()
 get = app.get
 
+
 @get('/')
 def ping():
     res = HTTPResponse()
