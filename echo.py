@@ -11,7 +11,9 @@ post = app.post
 @post('/')
 def echo():
     res = HTTPResponse()
+    body = dict()
     form = request.forms
-    if isinstance(form, dict):
-        res.body = json.dumps(form)
+    for k,v in form.items():
+        body[k] = v
+    res.body = json.dumps(body)
     return res
