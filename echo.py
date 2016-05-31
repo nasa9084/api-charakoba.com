@@ -13,7 +13,7 @@ def echo():
     res = HTTPResponse()
     body = dict()
     form = request.forms
-    for k,v in form.items():
+    for k, v in form.items():
         body[k] = v
     res.body = json.dumps(body)
     return res
