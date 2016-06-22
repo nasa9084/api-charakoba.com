@@ -4,12 +4,12 @@
 import json
 
 with open('config.json', 'r') as f:
-    cfg = json.load(f)
+    cfg = json.load(f)['IN_API']
 
 
 def is_alive():
     res = requests.get(
-        cfg['IN_API']['ENDPOINT']
+        cfg['ENDPOINT']
     )
     if res.status_code == 200:
         return True
@@ -20,12 +20,12 @@ def is_alive():
 def add_user(username, publickey):
     payload = {
         'mode': 'add',
-        'apikey': cfg['IN_API']['APIKEY'],
+        'apikey': cfg['APIKEY'],
         'user': username,
         'publickey': publickey
     }
     res = requests.post(
-        cfg['IN_API']['ENDPOINT'],
+        cfg['ENDPOINT'],
         data=payload
     )
     if res.status_code == 200 and res.text == 'Succeeded':
@@ -37,11 +37,11 @@ def add_user(username, publickey):
 def delete_user(username):
     payload = {
         'mode': 'del',
-        'apikey': cfg['IN_API']['APIKEY'],
+        'apikey': cfg['APIKEY'],
         'user': username
     }
     res = requests.post(
-        cfg['IN_API']['ENDPOINT'],
+        cfg['ENDPOINT'],
         data=payload
     )
     if res.status_code == 200 and res.text == 'Succeeded':
@@ -53,12 +53,12 @@ def delete_user(username):
 def modify_publickey(username, publickey):
     payload = {
         'mode': 'mod',
-        'apikey': cfg['IN_API']['APIKEY'],
+        'apikey': cfg['APIKEY'],
         'user': username,
         'publickey': publickey
     }
     res = requests.post(
-        cfg['IN_API']['ENDPOINT'],
+        cfg['ENDPOINT'],
         data=payload
     )
     if res.status_code == 200 and res.text == 'Succeeded':
