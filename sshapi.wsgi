@@ -35,21 +35,21 @@ def success(msg='Succeeded'):
 
 @post('/')
 @param(require=['username', 'id', 'publickey'])
-def add_user(params):
-    if InAPI.add_user(params['username'], params['publickey']):
+def add_user(param):
+    if InAPI.add_user(param['username'], param['publickey']):
         with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
             try:
                 cursor.execute(
                     '''INSERT INTO
                     ssh(id, user, publickey)
                     VALUES(%s, %s, %s);''',
-                    (params['id'],
-                     params['username'],
-                     params['publickey'])
+                    (param['id'],
+                     param['username'],
+                     param['publickey'])
                 )
             except:
                 response.status = 400
-                InAPI.delete_user(params['username'])
+                InAPI.delete_user(param['username'])
                 return failed('Database Insert Error')
             else:
                 return success()
@@ -60,15 +60,15 @@ def add_user(params):
 
 @delete('/')
 @param(require=['username', 'id'])
-def delete_user(params):
-    if InAPI.delete_user(params['username']):
+def delete_user(param):
+    if InAPI.delete_user(param['username']):
         with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
             try:
                 cursor.execute(
                     '''DELETE FROM ssh
                     WHERE id=%s;
                     ''',
-                    (params['id'],)
+                    (param['id'],)
                 )
             except:
                 response.status = 400
@@ -82,8 +82,8 @@ def delete_user(params):
 
 @put('/')
 @param(require=['username', 'id', 'publickey'])
-def modify_publickey(params):
-    if InAPI.modify_publickey(params['username'], params['publickey']):
+def modify_publickey(param):
+    if InAPI.modify_publickey(param['username'], param['publickey']):
         with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
             try:
                 cursor.execute(
@@ -91,7 +91,7 @@ def modify_publickey(params):
                     SET publickey=%s
                     WHERE id=%s;
                     ''',
-                    (params['publickey'], params['id'])
+                    (param['publickey'], param['id'])
                 )
             except:
                 response.status = 400

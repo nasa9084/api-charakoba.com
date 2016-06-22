@@ -44,7 +44,7 @@ def param(require=[], option=[]):
                     parameters[key] = request.forms.get(key)
                 else:
                     pass
-            func(parameters, *a, **ka)
+            func(param=parameters, *a, **ka)
         return _
     return deco
 
