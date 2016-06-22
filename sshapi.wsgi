@@ -14,3 +14,17 @@ delete = app.delete
 get = app.get
 post = app.post
 put = app.put
+
+
+def failed(msg='Failed'):
+    return {
+        'status': False,
+        'message': msg
+    }
+
+
+def success(msg='Succeeded'):
+    return {
+        'status': True,
+        'message': msg
+    }
