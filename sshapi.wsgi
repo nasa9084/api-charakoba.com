@@ -137,7 +137,7 @@ def is_avail_username(username):
         try:
             cursor.execute(
                 '''SELECT * FROM ssh
-                WHERE username=%s;
+                WHERE user=%s;
                 ''',
                 (username,)
             )
