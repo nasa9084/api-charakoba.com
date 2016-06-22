@@ -44,13 +44,13 @@ def param(require=[], option=[]):
         def _(*a, **ka):
             parameters = {}
             for key in require:
-                if key in request.forms:
+                if key in request.forms and request.forms.get(key):
                     parameters[key] = request.forms.get(key)
                 else:
                     response.status = 400
                     return RequireNotSatisfiedError(key)
             for key in option:
-                if key in request.forms:
+                if key in request.forms and request.forms.get(key):
                     parameters[key] = request.forms.get(key)
                 else:
                     pass
