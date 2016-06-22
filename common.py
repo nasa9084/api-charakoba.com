@@ -1,7 +1,32 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+from bottle import request
+from functools import wraps
 from hashlib import md5, sha256
+
+class RequireNotSatisfiedError(Exception):
+    pass
+
+
+def param(require=[], option=[]):
+    def deco(func):
+        @wraps
+        def _(*a, **ka):
+            parameters = {}
+            for key in require:
+                if key in request.forms:
+                    parameters[key] = request.forms.get(key)
+                else:
+                    raise RequireNotSatisfiedError(key)
+            for key in option:
+                if key in request.forms:
+                    parameters[key] = request.forms.get(key)
+                else:
+                    pass
+            func(parameters, *a, **ka)
+        return _
+    return deco
 
 
 def hash_password(password, email):
