@@ -21,7 +21,7 @@ class RequireNotSatisfiedError(Exception):
 
 
 def apikey(func):
-    @wraps
+    @wraps(func)
     def _(*a, **ka):
         given = request.forms.get('apikey')
         if given == cfg['APIKEY']:
@@ -33,7 +33,7 @@ def apikey(func):
 
 def param(require=[], option=[]):
     def deco(func):
-        @wraps
+        @wraps(func)
         def _(*a, **ka):
             parameters = {}
             for key in require:
