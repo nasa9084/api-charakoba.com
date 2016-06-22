@@ -8,4 +8,4 @@ post = app.post
 
 @post('/')
 def echo():
-    return request.forms
+    return dict(request.forms)
