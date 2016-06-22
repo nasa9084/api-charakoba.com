@@ -3,8 +3,11 @@
 
 from bottle import Bottle, request, response
 import json
+import MySQLdb as DB
+from MySQLdb.cursors import DictCursor as DC
 
 import api_on_ssh as InAPI
+from common import param
 
 with open('config.json', 'r') as f:
     cfg = json.load(f)['SSH_API']
@@ -28,3 +31,28 @@ def success(msg='Succeeded'):
         'status': True,
         'message': msg
     }
+
+
+@post('/')
+@param(require=['username', 'id', 'publickey'])
+def add_user(params):
+    if InAPI.add_user(params['username'], params['publickey']):
+        with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+            try:
+                cursor.execute(
+                    '''INSERT INTO
+                    ssh(id, user, publickey)
+                    VALUES(%s, %s, %s);''',
+                    (params['id'],
+                     params['username'],
+                     params['publickey'])
+                )
+            except:
+                response.status = 400
+                InAPI.delete_user(params['username'])
+                return failed('Database Insert Error')
+            else:
+                return success()
+    else:
+        response.status = 400
+        return failed('SSH Server API Error')
