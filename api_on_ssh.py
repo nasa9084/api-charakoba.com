@@ -15,3 +15,20 @@ def is_alive():
         return True
     else:
         return False
+
+
+def add_user(username, publickey):
+    payload = {
+        'mode': 'add',
+        'apikey': cfg['IN_API']['APIKEY'],
+        'user': username,
+        'publickey': publickey
+    }
+    res = requests.post(
+        cfg['IN_API']['ENDPOINT'],
+        data=payload
+    )
+    if res.status_code == 200 and res.text == 'Succeeded':
+        return True
+    else:
+        return False
