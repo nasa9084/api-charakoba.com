@@ -56,3 +56,25 @@ def add_user(params):
     else:
         response.status = 400
         return failed('SSH Server API Error')
+
+
+@delete('/')
+@param(require=['username', 'id'])
+def delete_user(params):
+    if InAPI.delete_user(params['username']):
+        with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+            try:
+                cursor.execute(
+                    '''DELETE FROM ssh
+                    WHERE id=%s;
+                    ''',
+                    (params['id'],)
+                )
+            except:
+                response.status = 400
+                return failed('Database Delete Error')
+            else:
+                return success()
+    else:
+        response.status = 400
+        return failed('SSH Server API Error')
