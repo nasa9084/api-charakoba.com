@@ -78,3 +78,26 @@ def delete_user(params):
     else:
         response.status = 400
         return failed('SSH Server API Error')
+
+
+@put('/')
+@param(require=['username', 'id', 'publickey'])
+def modify_publickey(params):
+    if InAPI.modify_publickey(params['username'], params['publickey']):
+        with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+            try:
+                cursor.execute(
+                    '''UPDATE ssh
+                    SET publickey=%s
+                    WHERE id=%s;
+                    ''',
+                    (params['publickey'], params['id'])
+                )
+            except:
+                response.status = 400
+                return failed('Database Modify Error')
+            else:
+                return success()
+    else:
+        response.status = 400
+        return failed('SSH Server API Error')
