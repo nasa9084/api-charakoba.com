@@ -7,7 +7,7 @@ import MySQLdb as DB
 from MySQLdb.cursors import DictCursor as DC
 
 import api_on_ssh as InAPI
-from common import param
+from common import apikey, param
 
 with open('config.json', 'r') as f:
     cfg = json.load(f)['SSH_API']
@@ -34,6 +34,7 @@ def success(msg='Succeeded'):
 
 
 @post('/')
+@apikey
 @param(require=['username', 'id', 'publickey'])
 def add_user(param):
     if InAPI.add_user(param['username'], param['publickey']):
@@ -59,6 +60,7 @@ def add_user(param):
 
 
 @delete('/')
+@apikey
 @param(require=['username', 'id'])
 def delete_user(param):
     if InAPI.delete_user(param['username']):
@@ -81,6 +83,7 @@ def delete_user(param):
 
 
 @put('/')
+@apikey
 @param(require=['username', 'id', 'publickey'])
 def modify_publickey(param):
     if InAPI.modify_publickey(param['username'], param['publickey']):
