@@ -124,6 +124,7 @@ def fetch(id_):
         else:
             row = cursor.fetchone()
     if row:
+        row['updated_at'] = row['updated_at'].strftime('%Y-%m-%d %H:%M:%S')
         return row
     else:
         response.status = 400
