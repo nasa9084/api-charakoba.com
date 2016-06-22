@@ -25,7 +25,7 @@ def apikey(func):
     def _(*a, **ka):
         given = request.forms.get('apikey')
         if given == cfg['APIKEY']:
-            func(*a, **ka)
+            return func(*a, **ka)
         else:
             raise APIKeyNotValidError
     return _
@@ -46,7 +46,7 @@ def param(require=[], option=[]):
                     parameters[key] = request.forms.get(key)
                 else:
                     pass
-            func(param=parameters, *a, **ka)
+            return func(param=parameters, *a, **ka)
         return _
     return deco
 
