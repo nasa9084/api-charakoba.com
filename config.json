@@ -1,6 +1,6 @@
 {
     "SSH_API": {
-        "DB_INFO": {
+        "DB": {
             "host": "",
             "db": "",
             "user": "",
