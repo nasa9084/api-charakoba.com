@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from bottle import request
+from bottle import request, response
 from functools import wraps
 from hashlib import md5, sha256
 import json
@@ -12,12 +12,18 @@ with open(conf, 'r') as f:
     cfg = json.load(f)
 
 
-class APIKeyNotValidError(Exception):
-    pass
+def APIKeyNotValidError():
+    return {
+        'status': False,
+        'message': 'API key not valid'
+    }
 
 
-class RequireNotSatisfiedError(Exception):
-    pass
+def RequireNotSatisfiedError(key):
+    return {
+        'status': False,
+        'message': '{0} is required'.format(key)
+    }
 
 
 def apikey(func):
@@ -27,7 +33,8 @@ def apikey(func):
         if given == cfg['APIKEY']:
             return func(*a, **ka)
         else:
-            raise APIKeyNotValidError
+            response.status = 400
+            return APIKeyNotValidError()
     return _
 
 
@@ -40,7 +47,8 @@ def param(require=[], option=[]):
                 if key in request.forms:
                     parameters[key] = request.forms.get(key)
                 else:
-                    raise RequireNotSatisfiedError(key)
+                    response.status = 400
+                    return RequireNotSatisfiedError(key)
             for key in option:
                 if key in request.forms:
                     parameters[key] = request.forms.get(key)
