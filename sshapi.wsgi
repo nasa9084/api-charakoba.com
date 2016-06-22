@@ -128,7 +128,7 @@ def fetch(id_):
         return row
     else:
         response.status = 400
-        return false('No Record')
+        return failed('No Record')
 
 
 @get('/init')
