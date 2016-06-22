@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from bottle import Bottle
+from bottle import Bottle, request
 
 app = application = Bottle()
 post = app.post
