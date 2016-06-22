@@ -1,4 +1,11 @@
 {
+    "SSH_API": {
+        "DB_INFO": {
+            "host": "",
+            "db": "",
+            "user": "",
+            "passwd": ""
+    },
     "IN_API": {
         "ENDPOINT": "",
         "APIKEY": ""
