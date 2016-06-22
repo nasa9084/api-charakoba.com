@@ -4,6 +4,8 @@
 from bottle import Bottle, request, response
 import json
 
+import api_on_ssh as InAPI
+
 with open('config.json', 'r') as f:
     cfg = json.load(f)
 
