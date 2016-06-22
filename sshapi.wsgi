@@ -126,3 +126,30 @@ def fetch(id_):
     else:
         response.status = 400
         return false('No Record')
+
+
+@get('/init')
+def initialize():
+    if cfg['INIT']:
+        with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+            try:
+                cursor.execute(
+                    '''CREATE TABLE ssh
+                    (
+                    id INT PRIMARY KEY,
+                    user VARCHAR(128) NOT NULL,
+                    publickey LONGTEXT NOT NULL,
+                    updated_at TIMESTAMP NOT NULL
+                    DEFAULT CURRENT_TIMESTAMP
+                    ON UPDATE CURRENT_TIMESTAMP
+                    );
+                    '''
+                )
+            except:
+                response.status = 500
+                return failed('Database Error')
+            else:
+                return success()
+    else:
+        response.status = 400
+        return failed('Initialize is not Allowed')

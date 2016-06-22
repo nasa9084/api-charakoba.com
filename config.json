@@ -1,6 +1,7 @@
 {
     "APIKEY": "apikey",
     "SSH_API": {
+        "INIT": true,
         "DB": {
             "host": "",
             "db": "",
