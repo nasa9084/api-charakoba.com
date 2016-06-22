@@ -2,6 +2,7 @@
 # -*- coding:utf-8 -*-
 
 import json
+import requests
 
 with open('config.json', 'r') as f:
     cfg = json.load(f)['IN_API']
