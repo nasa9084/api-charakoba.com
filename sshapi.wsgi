@@ -5,6 +5,7 @@ from bottle import Bottle, request, response
 import json
 import MySQLdb as DB
 from MySQLdb.cursors import DictCursor as DC
+import os
 
 import api_on_ssh as InAPI
 from common import apikey, param
