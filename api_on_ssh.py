@@ -32,3 +32,19 @@ def add_user(username, publickey):
         return True
     else:
         return False
+
+
+def delete_user(username):
+    payload = {
+        'mode': 'del',
+        'apikey': cfg['IN_API']['APIKEY'],
+        'user': username
+    }
+    res = requests.post(
+        cfg['IN_API']['ENDPOINT'],
+        data=payload
+    )
+    if res.status_code == 200 and res.text == 'Succeeded':
+        return True
+    else:
+        return False
