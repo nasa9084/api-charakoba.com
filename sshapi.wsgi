@@ -117,7 +117,7 @@ def fetch(id_):
                 (id_,)
             )
         except:
-            response.status = 400
+            response.status = 500
             return failed('Database Error')
         else:
             row = cursor.fetchone()
