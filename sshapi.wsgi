@@ -7,7 +7,7 @@ import json
 import api_on_ssh as InAPI
 
 with open('config.json', 'r') as f:
-    cfg = json.load(f)
+    cfg = json.load(f)['SSH_API']
 
 app = application = Bottle()
 delete = app.delete
