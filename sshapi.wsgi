@@ -131,6 +131,27 @@ def fetch(id_):
         return failed('No Record')
 
 
+@get('/isavail/<username>')
+def is_avail_username(username):
+    with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+        try:
+            cursor.execute(
+                '''SELECT * FROM ssh
+                WHERE username=%s;
+                ''',
+                (username,)
+            )
+        except:
+            response.status = 500
+            return failed('Database Error')
+        else:
+            row = cursor.fetchone()
+    if row:
+        return success('not available')
+    else:
+        return success('available')
+
+
 @get('/init')
 def initialize():
     if cfg['INIT']:
