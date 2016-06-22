@@ -9,7 +9,8 @@ from MySQLdb.cursors import DictCursor as DC
 import api_on_ssh as InAPI
 from common import apikey, param
 
-with open('config.json', 'r') as f:
+conf = os.path.join(os.path.dirname(__file__), 'config.json')
+with open(conf, 'r') as f:
     cfg = json.load(f)['SSH_API']
 
 app = application = Bottle()

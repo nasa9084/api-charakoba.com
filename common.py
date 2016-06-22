@@ -6,7 +6,8 @@ from functools import wraps
 from hashlib import md5, sha256
 import json
 
-with open('config.json', 'r') as f:
+conf = os.path.join(os.path.dirname(__file__), 'config.json')
+with open(conf, 'r') as f:
     cfg = json.load(f)
 
 

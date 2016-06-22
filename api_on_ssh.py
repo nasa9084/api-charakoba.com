@@ -3,8 +3,10 @@
 
 import json
 import requests
+import os
 
-with open('config.json', 'r') as f:
+conf = os.path.join(os.path.dirname(__file__), 'config.json')
+with open(conf, 'r') as f:
     cfg = json.load(f)['IN_API']
 
 
