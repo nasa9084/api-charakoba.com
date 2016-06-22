@@ -4,9 +4,29 @@
 from bottle import request
 from functools import wraps
 from hashlib import md5, sha256
+import json
+
+with open('config.json', 'r') as f:
+    cfg = json.load(f)
+
+
+class APIKeyNotValidError(Exception):
+    pass
+
 
 class RequireNotSatisfiedError(Exception):
     pass
+
+
+def apikey(func):
+    @wraps
+    def _(*a, **ka):
+        given = request.forms.get('apikey')
+        if given == cfg['APIKEY']:
+            func(*a, **ka)
+        else:
+            raise APIKeyNotValidError
+    return _
 
 
 def param(require=[], option=[]):
