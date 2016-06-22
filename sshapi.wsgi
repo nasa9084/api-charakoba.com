@@ -101,3 +101,25 @@ def modify_publickey(params):
     else:
         response.status = 400
         return failed('SSH Server API Error')
+
+
+@get('/<id_:int>/')
+def fetch(id_):
+    with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
+        try:
+            cursor.execute(
+                '''SELECT * FROM ssh
+                WHERE id=%s;
+                ''',
+                (id_,)
+            )
+        except:
+            response.status = 400
+            return failed('Database Error')
+        else:
+            row = cursor.fetchone()
+    if row:
+        return row
+    else:
+        response.status = 400
+        return false('No Record')
