@@ -5,6 +5,7 @@ from bottle import request
 from functools import wraps
 from hashlib import md5, sha256
 import json
+import os
 
 conf = os.path.join(os.path.dirname(__file__), 'config.json')
 with open(conf, 'r') as f:
