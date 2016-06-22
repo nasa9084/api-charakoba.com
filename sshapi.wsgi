@@ -106,7 +106,7 @@ def modify_publickey(param):
         return failed('SSH Server API Error')
 
 
-@get('/<id_:int>/')
+@get('/<id_:int>')
 def fetch(id_):
     with DB.connect(cursorclass=DC, **cfg['DB']) as cursor:
         try:
