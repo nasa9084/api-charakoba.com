@@ -28,7 +28,7 @@
             "vcsa",
             "rpc",
             "abrt",
-            "apache"
+            "apache",
             "rpcuser",
             "nfsnobody",
             "haldaemon",
