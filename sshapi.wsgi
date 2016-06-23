@@ -8,7 +8,7 @@ from MySQLdb.cursors import DictCursor as DC
 import os
 
 import api_on_ssh as InAPI
-from common import apikey, param
+from common import apikey, param, failed, success
 
 conf = os.path.join(os.path.dirname(__file__), 'config.json')
 with open(conf, 'r') as f:
@@ -19,20 +19,6 @@ delete = app.delete
 get = app.get
 post = app.post
 put = app.put
-
-
-def failed(msg='Failed'):
-    return {
-        'status': False,
-        'message': msg
-    }
-
-
-def success(msg='Succeeded'):
-    return {
-        'status': True,
-        'message': msg
-    }
 
 
 @post('/')

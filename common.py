@@ -26,6 +26,20 @@ def RequireNotSatisfiedError(key):
     }
 
 
+def failed(msg='Failed'):
+    return {
+        'status': False,
+        'message': msg
+    }
+
+
+def success(msg='Succeeded'):
+    return {
+        'status': True,
+        'message': msg
+    }
+
+
 def apikey(func):
     @wraps(func)
     def _(*a, **ka):
