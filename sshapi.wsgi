@@ -171,9 +171,19 @@ def initialize():
                 )
             except:
                 response.status = 500
-                return failed('Database Error')
-            else:
-                return success()
+                return failed('Database Table Creation Error')
+            try:
+                for i, key in enumerate(cfg['RESERVED']):
+                    cursor.execute(
+                        '''INSERT INTO ssh
+                        (id, user, publickey)
+                        VALUES(%s, %s, "RESERVED");
+                        ''',
+                        (i, key)
+                    )
+            except:
+                response.status = 500
+                return failed('Database Reserved User Insert Error')
     else:
         response.status = 400
         return failed('Initialize is not Allowed')
