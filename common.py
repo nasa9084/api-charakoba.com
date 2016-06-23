@@ -26,18 +26,20 @@ def RequireNotSatisfiedError(key):
     }
 
 
-def failed(msg='Failed'):
-    return {
-        'status': False,
-        'message': msg
-    }
+def failed(msg='Failed', **ex):
+    return dict(
+        status=False,
+        message=msg,
+        **ex
+    )
 
 
-def success(msg='Succeeded'):
-    return {
-        'status': True,
-        'message': msg
-    }
+def success(msg='Succeeded', **ex):
+    return dict(
+        status=True,
+        message= msg,
+        **ex
+    )
 
 
 def apikey(func):
