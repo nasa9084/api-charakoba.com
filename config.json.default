@@ -1,0 +1,49 @@
+{
+    "APIKEY": "apikey",
+    "SSH_API": {
+        "INIT": true,
+        "DB": {
+            "host": "",
+            "db": "",
+            "user": "",
+            "passwd": ""
+        },
+        "RESERVED": [
+            "root",
+            "bin",
+            "daemon",
+            "adm",
+            "lp",
+            "sync",
+            "shutdown",
+            "halt",
+            "mail",
+            "uucp",
+            "operator",
+            "games",
+            "gopher",
+            "ftp",
+            "nobody",
+            "dbus",
+            "vcsa",
+            "rpc",
+            "abrt",
+            "apache",
+            "rpcuser",
+            "nfsnobody",
+            "haldaemon",
+            "ntp",
+            "saslauth",
+            "postfix",
+            "tomcat",
+            "webalizer",
+            "sshd",
+            "oprofile",
+            "tcpdump"
+        ]
+    },
+    "IN_API": {
+        "ENDPOINT": "",
+        "APIKEY": ""
+    }
+}
