@@ -45,5 +45,32 @@
     "IN_API": {
         "ENDPOINT": "",
         "APIKEY": ""
+    },
+    "AUTH_API": {
+        "INIT": true,
+        "SEND_MAIL": true,
+        "host": "",
+        "DB": {
+            "host": "",
+            "db": "",
+            "user": "",
+            "passwd": ""
+        },
+        "EXPIRE_DATES": 7,
+        "TOKEN_LENGTH": 10,
+        "MAIL_ADDRESS": "",
+        "MAIL_SUBJECT": "",
+        "MAIL_BODY": ""
+    },
+    "DNS_API": {
+        "DBINFO": [
+            "dbi:mysql:db_name",
+            "root",
+            ""
+        ],
+        "FLAG_FILE": "./flag.txt"
+    },
+    "SENDGRID": {
+        "APIKEY": ""
     }
 }
