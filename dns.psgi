@@ -62,10 +62,11 @@ del '/records/:id' => sub {
     my @bind_values = ($self->param('id'));
     my $query = 'DELETE FROM dns WHERE id=?;';
     my $dbh = DBI->connect(@DBINFO);
-    $dbh->do($query, {}, @bind_values) or die $dbh->errstr;
+    my $ret = $dbh->do($query, {}, @bind_values);
     $dbh->disconnect;
+    my $msg = $ret eq 1 ? 'Deleted.' : 'Not Found.';
     &set_flag;
-    $self->render(text=>encode_json({status => 'Deleted'}));
+    $self->render(text=>encode_json({message => $msg}));
 };
 
 put '/records/:id' => sub {
@@ -80,10 +81,11 @@ put '/records/:id' => sub {
         'host=?, ipv4_address=?, record_type=?, domain=? ' .
         'WHERE id=?';
     my $dbh = DBI->connect(@DBINFO);
-    $dbh->do($query, {}, @bind_values);
+    my $ret = $dbh->do($query, {}, @bind_values);
     $dbh->disconnect;
+    my $msg = $ret eq 1 ? 'Updated.' : 'Not Found.';
     &set_flag;
-    $self->render(text=>encode_json({status => 'Updated'}));
+    $self->render(text=>encode_json({message => $msg}));
 };
 
 any '/*path' => {path => undef} => sub {
