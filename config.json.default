@@ -70,6 +70,22 @@
         ],
         "FLAG_FILE": "./flag.txt"
     },
+    "RPROXY_API": {
+        "DBINFO": [
+            "dbi:mysql:api_charakoba",
+            "root",
+            "nasa9084"
+        ],
+        "RPROXY_HOSTS": [
+            "192.168.11.15"
+        ],
+        "RPROXY_INFO": {
+            "user": "root"
+        },
+        "RSYNC_KEY": "./",
+        "CONF_PATH": "./confs",
+        "FLAG_FILE": "./rproxy_flag.txt"
+    },
     "SENDGRID": {
         "APIKEY": ""
     }
