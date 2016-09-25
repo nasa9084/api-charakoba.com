@@ -22,7 +22,7 @@ import messages
 class ParameterRequirementsError(HTTPError):
     def __init__(self, key):
         msg = messages.REQUIRE.format(key)
-        super.__init__(400, msg)
+        super().__init__(400, msg)
 
 
 class RecordNotFoundError(HTTPError):
@@ -33,13 +33,13 @@ class RecordNotFoundError(HTTPError):
 
 class UserNotActivatedError(HTTPError):
     def __init__(self):
-        super.__init__(401, messages.USER_NOT_ACTIVATED)
+        super().__init__(401, messages.USER_NOT_ACTIVATED)
 
 
 class UserNotFoundError(HTTPError):
     def __init__(self, uid):
         msg = messages.USER_NOT_FOUND + ': ' + str(uid)
-        super.__init__(404, msg)
+        super().__init__(404, msg)
 
 
 class Service(object):
