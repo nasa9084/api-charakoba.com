@@ -114,6 +114,7 @@ class User(object):
         self.is_active = result['is_active']
 
     def activate(self):
+        '''Activate User with mail verification.'''
         with DB.connect(**config.RDB_INFO) as cursor:
             cursor.execute(
                 'UPDATE users '
@@ -123,6 +124,9 @@ class User(object):
             )
 
     def update_passwd(self, new_passwd):
+        '''
+        :param str new_passwd: New Password
+        '''
         with DB.connect(**config.RDB_INFO) as cursor:
             cursor.execute(
                 'UPDATE users '
