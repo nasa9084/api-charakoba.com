@@ -50,7 +50,7 @@ class Service(object):
 
 class Users(object):
     '''Users Class'''
-    def list_users(self):
+    def list(self):
         '''
         :returns: User Info Dict
         :rtype: dict
