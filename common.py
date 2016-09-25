@@ -94,8 +94,8 @@ class Users(object):
         with DB.connect(**config.RDB_INFO) as cursor:
             cursor.execute(
                 'INSERT INTO users '
-                '(username, password, email, role) '
-                'VALUES (%s, %s, %s, %s);',
+                '(username, password, email, role, is_delete, is_active) '
+                'VALUES (%s, %s, %s, %s, 0, 0);',
                 (username, hash_passwd(passwd), email, role)
             )
             return User(cursor.lastrowid)
