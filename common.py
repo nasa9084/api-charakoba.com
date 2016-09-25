@@ -64,7 +64,7 @@ class Users(object):
             for user in cursor.fetchall():
                 yield user
 
-    def add_user(self, username, passwd, email, role):
+    def add(self, username, passwd, email, role):
         '''
         :returns: Created User object
         :rtype: User
@@ -79,7 +79,7 @@ class Users(object):
             uid = cursor.lastrowid
         return User(uid)
 
-    def delete_user(self, uid):
+    def delete(self, uid):
         '''
         :param int uid: User ID you want to delete.
         '''
