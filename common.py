@@ -57,8 +57,8 @@ class Service(object):
         @functools.wraps(func)
         def _(*ar, **kw):
             id_ = request.params.get('id')
-            if username is None:
-                raise ParameterRequirementsError('username')
+            if id_ is None:
+                raise ParameterRequirementsError('ID')
             passwd = request.params.get('password')
             if passwd is None:
                 raise ParameterRequirementsError('password')
