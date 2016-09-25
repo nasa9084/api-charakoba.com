@@ -135,6 +135,9 @@ class User(object):
         self.role = result['role']
         self.is_active = result['is_active']
 
+    def __str__(self):
+        return "[ID: {}] {} {}".format(self.uid, self.role, self.username)
+
     def activate(self):
         '''Activate User with mail verification.'''
         with DB.connect(**config.RDB_INFO) as cursor:
