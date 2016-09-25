@@ -360,8 +360,8 @@ def hash_passwd(passwd):
     length_score = 25 - len(passwd) if len(passwd) < 25 else 0
     # 文字種数、パスワード長が大きいほどループは不要
     loop = stretch_idx * symbol_score * length_score
-    salt = encode(passwd).hexdigest()
-    digest = encrypt(passwd + salt).hexdigest()
+    salt = encode(passwd.encode()).hexdigest()
+    digest = encrypt((passwd + salt).encode()).hexdigest()
     for i in range(loop):
-        digest = encrypt(digest + salt).hexdigest()
+        digest = encrypt((digest + salt).encode()).hexdigest()
     return digest
