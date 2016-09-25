@@ -130,7 +130,7 @@ class User(object):
             )
             result = cursor.fetchone()
             if not result:
-                raise UserNotFoundError
+                raise UserNotFoundError(uid)
         self.username = result['username']
         self.role = result['role']
         self.is_active = result['is_active']
