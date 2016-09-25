@@ -275,7 +275,10 @@ class DNSRecord(BaseRecord):
 
 
 def params(require=[], option=[]):
-    '''Get form parameters Decorator'''
+    '''
+    :decorator: Get form HTTP form parameters.
+    :arg: The parameters will give with argument name: params.
+    '''
     def _(func):
         @functools.wraps(func)
         def _(*ar, **kw):
