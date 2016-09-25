@@ -98,7 +98,7 @@ class Users(object):
                 'VALUES (%s, %s, %s, %s, 0, 0);',
                 (username, hash_passwd(passwd), email, role)
             )
-            return User(cursor.lastrowid)
+        return User(cursor.lastrowid)
 
     def delete(self, uid):
         '''
