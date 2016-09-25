@@ -19,6 +19,11 @@ import messages
 
 
 # Exceptions
+class AuthenticationError(HTTPError):
+    def __init__(self):
+        super().__init__(401, messages.AUTH_ERROR)
+
+
 class ParameterRequirementsError(HTTPError):
     def __init__(self, key):
         msg = messages.REQUIRE.format(key)
@@ -44,8 +49,22 @@ class UserNotFoundError(HTTPError):
 
 class Service(object):
     '''Service Class'''
-    def __init__(self):
-        pass
+    @staticmethod
+    def auth(func):
+        @functools.wraps(func)
+        def _(*ar, **kw):
+            id_ = request.params.get('id')
+            if username is None:
+                raise ParameterRequirementsError('username')
+            passwd = request.params.get('password')
+            if passwd is None:
+                raise ParameterRequirementsError('password')
+            user = User(id_)
+            if user.password_auth(passwd):
+                return func(*ar, **kw)
+            else:
+                raise AuthenticationError
+        return _
 
 
 class Users(object):
@@ -147,6 +166,24 @@ class User(object):
                 (new_role, self.uid)
             )
         self.role = new_role
+
+    def password_auth(self, passwd):
+        '''
+        :param str passwd: password you want to check
+        '''
+        with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
+            cursor.execute(
+                'SELECT passwd '
+                'FROM users '
+                'WHERE id=%s;',
+                (self.uid,)
+            )
+            result = cursor.fetchone()
+        if hash_passwd(passwd) == result['passwd']:
+            return True
+        else:
+            return False
+
     def create_token(self):
         '''
         :returns: token
