@@ -135,6 +135,18 @@ class User(object):
                 (hash_passwd(new_passwd), self.uid)
             )
 
+    def update_role(self, new_role):
+        '''
+        :param str new_role: New Role
+        '''
+        with DB.connect(**config.RDB_INFO) as cursor:
+            cursor.execute(
+                'UPDATE users '
+                'SET role=%s '
+                'WHERE id=%s;',
+                (new_role, self.uid)
+            )
+        self.role = new_role
     def create_token(self):
         '''
         :returns: token
