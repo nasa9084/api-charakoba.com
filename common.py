@@ -178,13 +178,13 @@ class User(object):
         '''
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
             cursor.execute(
-                'SELECT passwd '
+                'SELECT password '
                 'FROM users '
                 'WHERE id=%s;',
                 (self.uid,)
             )
             result = cursor.fetchone()
-        if hash_passwd(passwd) == result['passwd']:
+        if hash_passwd(passwd) == result['password']:
             return True
         else:
             return False
