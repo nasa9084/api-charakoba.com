@@ -52,7 +52,7 @@ class Users(object):
     '''Users Class'''
     def list_users(self):
         '''
-        :returns: ユーザ情報の辞書
+        :returns: User Info Dict
         :rtype: dict
         '''
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
@@ -64,7 +64,7 @@ class Users(object):
 
     def add_user(self, username, passwd, email, role):
         '''
-        :returns: 作成したユーザのオブジェクト
+        :returns: Created User object
         :rtype: User
         '''
         with DB.connect(**config.RDB_INFO) as cursor:
@@ -79,7 +79,7 @@ class Users(object):
 
     def delete_user(self, uid):
         '''
-        :param int uid: 削除するユーザのID
+        :param int uid: User ID you want to delete.
         '''
         with DB.connect(**config.RDB_INFO) as cursor:
             cursor.execute(
@@ -94,8 +94,8 @@ class User(object):
     '''User Class'''
     def __init__(self, uid):
         '''
-        :param int uid: ユーザID
-        :raises UserNotFoundError: 該当するIDのユーザがいない場合
+        :param int uid: User ID
+        :raises UserNotFoundError: Not found user who has given user id
         '''
         self.uid = uid
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
@@ -294,7 +294,7 @@ def params(require=[], option=[]):
 
 def hash_passwd(passwd):
     '''
-    :todo: 適切なソルトを選定する必要がある
+    :todo: choose a suitable salt
     '''
     stretch_idx = 30
     # 文字種数スコア
