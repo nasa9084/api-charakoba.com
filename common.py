@@ -121,15 +121,6 @@ class User(object):
                 (self.uid,)
             )
 
-    def _is_active(self, func):
-        @functools.wraps(func)
-        def _(*ar, **kw):
-            if not self.is_active:
-                raise UserNotActivatedError
-            return func(self, *ar, **kw)
-        return _
-
-    @_is_active
     def update_passwd(self, new_passwd):
         with DB.connect(**config.RDB_INFO) as cursor:
             cursor.execute(
@@ -139,7 +130,6 @@ class User(object):
                 (hash_passwd(new_passwd), self.uid)
             )
 
-    @_is_active
     def create_token(self):
         '''
         :returns: token
