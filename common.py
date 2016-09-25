@@ -61,7 +61,8 @@ class Users(object):
                 'FROM users '
                 'WHERE is_delete=0;'
             )
-            return cursor.fetchall()
+            for user in cursor.fetchall():
+                yield user
 
     def add_user(self, username, passwd, email, role):
         '''
