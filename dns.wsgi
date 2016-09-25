@@ -32,7 +32,7 @@ def get_record_from_id(id_):
 @post('/record')
 @Service.auth
 @params(require=['type', 'host', 'domain', 'ipv4_addr'])
-def post_record(params):
+def post_record(user, params):
     params['type_'] = params['type']
     del params['type']
     record = DNSRecords().add(**params)
@@ -42,7 +42,7 @@ def post_record(params):
 @put('/record/<id_:int>')
 @Service.auth
 @params(option=['type', 'host', 'domain', 'ipv4_addr'])
-def put_record(id_, params):
+def put_record(user, id_, params):
     params['type_'] = params.get('type')
     if not params.get('type'):
         del params['type']
@@ -51,7 +51,7 @@ def put_record(id_, params):
 
 @delete('/record/<id_:int>')
 @Service.auth
-def delete_record(id_):
+def delete_record(user, id_):
     DNSRecords().delete(id_)
 
 

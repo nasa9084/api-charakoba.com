@@ -64,7 +64,7 @@ class Service(object):
                 raise ParameterRequirementsError('password')
             user = User(id_)
             if user.password_auth(passwd):
-                return func(*ar, **kw)
+                return func(user=User(id_), *ar, **kw)
             else:
                 raise AuthenticationError
         return _
