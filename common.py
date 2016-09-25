@@ -58,7 +58,8 @@ class Users(object):
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
             cursor.execute(
                 'SELECT username, email, role '
-                'FROM users;'
+                'FROM users '
+                'WHERE is_delete=0;'
             )
             return cursor.fetchall()
 
