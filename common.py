@@ -282,7 +282,7 @@ def params(require=[], option=[]):
             args = {}
             form_data = request.params
             for key in require:
-                if not key in form_data:
+                if key not in form_data:
                     raise ParameterRequirementsError(key)
                 args[key] = form_data[key]
             for key in option:
