@@ -51,6 +51,9 @@ class Service(object):
     '''Service Class'''
     @staticmethod
     def auth(func):
+        '''
+        :decorator: user authentication with id and passwd
+        '''
         @functools.wraps(func)
         def _(*ar, **kw):
             id_ = request.params.get('id')
