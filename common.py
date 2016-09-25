@@ -74,8 +74,8 @@ class Users(object):
     '''Users Class'''
     def list(self):
         '''
-        :returns: User Info Dict
-        :rtype: dict
+        :returns: generator of user
+        :rtype: generator
         '''
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
             cursor.execute(
@@ -173,6 +173,8 @@ class User(object):
     def password_auth(self, passwd):
         '''
         :param str passwd: password you want to check
+        :return: auth result
+        :rtype: bool
         '''
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
             cursor.execute(
@@ -190,6 +192,7 @@ class User(object):
     def create_token(self):
         '''
         :returns: token
+        :rtype: str
         '''
         token = config.TOKEN_PREFIX + uuid4()
         redis = Redis(**config.REDIS_INFO)
