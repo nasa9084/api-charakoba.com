@@ -76,12 +76,12 @@ class Users(object):
         '''
         with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
             cursor.execute(
-                'SELECT username, email, role '
+                'SELECT id '
                 'FROM users '
                 'WHERE is_delete=0;'
             )
             for user in cursor.fetchall():
-                yield user
+                yield User(user['id'])
 
     def add(self, username, passwd, email, role):
         '''
