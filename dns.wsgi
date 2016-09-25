@@ -1,16 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-import pymysql as DB
 from bottle import Bottle
 import json
 
 from common import Service, DNSRecords, DNSRecord, params
-import common
-
-# Config
-import config
-import messages
 
 app = application = Bottle()
 get = app.get
@@ -58,7 +52,7 @@ def put_record(id_, params):
 @delete('/record/<id_:int>')
 @Service.auth
 def delete_record(id_):
-    record = DNSRecords().delete(id_)
+    DNSRecords().delete(id_)
 
 
 @error(400)
