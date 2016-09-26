@@ -36,6 +36,12 @@ class RecordNotFoundError(HTTPError):
         super().__init__(404, msg)
 
 
+class RoleCheckError(HTTPError):
+    def __init__(self):
+        msg = messages.ROLE_CHECK_ERROR
+        super().__init__(405, msg)
+
+
 class UserNotActivatedError(HTTPError):
     def __init__(self):
         super().__init__(401, messages.USER_NOT_ACTIVATED)
@@ -67,6 +73,28 @@ class Service(object):
                 return func(user=User(id_), *ar, **kw)
             else:
                 raise AuthenticationError
+        return _
+
+    @staticmethod
+    def role(role):
+        '''
+        :decorator: user role checker
+        '''
+        def _(func):
+            @funtools.wraps(func)
+            def _(*ar, **kw):
+                id_ = request.params.get('id')
+                if id_ is None:
+                    raise ParameterRequirementsError('ID')
+                passwd = request.params.get('password')
+                if passwd is None:
+                    raise ParameterRequirementsError('passsword')
+                user = User(id_)
+                if user.role == role:
+                    return func(*ar, **kw)
+                else:
+                    raise RoleCheckError
+            return _
         return _
 
 
