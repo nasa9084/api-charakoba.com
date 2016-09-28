@@ -439,15 +439,15 @@ def hash_passwd(passwd):
     :todo: choose a suitable salt
     '''
     stretch_idx = 30
-    # 文字種数スコア
+    # number of character type score
     symbol_score = 4
     symbol_score -= 1 if re.match("[a-z]", passwd) else 0
     symbol_score -= 1 if re.match("[A-Z]", passwd) else 0
     symbol_score -= 1 if re.match("[0-9]", passwd) else 0
     symbol_score -= 1 if re.match("[!#$%&+*_.,/@^-]", passwd) else 0
-    # パスワード長スコア
+    # password length score
     length_score = 25 - len(passwd) if len(passwd) < 25 else 0
-    # 文字種数、パスワード長が大きいほどループは不要
+    # as password length is longer, as more character types, more loop
     loop = stretch_idx * symbol_score * length_score
     salt = encode(passwd.encode()).hexdigest()
     digest = encrypt((passwd + salt).encode()).hexdigest()
