@@ -355,6 +355,64 @@ class DNSRecord(BaseRecord):
         return self
 
 
+class ReverseProxyRecords(BaseRecords):
+    '''Reverse Proxy Records class extends BaseRecords'''
+    def __init__(self):
+        self.table = 'rproxy'
+
+    def add(self, host, upstream):
+        '''
+        :param str host: hostname that resolved from
+        :param str upstream: upstream hostname that resolve to
+        '''
+        with DB.connect(**config.RDB_INFO) as cursor:
+            cursor.execute(
+                'INSERT INTO {} '
+                '(host, upstream) '
+                'VALUES (%s, %s);'.format(self.table),
+                (host, upstream)
+            )
+        return ReverseProxyRecord(cursor.lastrowid)
+
+
+class ReverseProxyRecord(BaseRecord):
+    '''Reverse Proxy Record Class extends BaseRecord'''
+    def __init__(self, id_):
+        with DB.connect(cursorclass=DC, **config.RDB_INFO) as cursor:
+            cursor.execute(
+            )
+            result = cursor.fetchone()
+        if not result:
+            raise RecordNotFoundError(id_)
+        self.host = result['host']
+        self.upstream = result['upstream']
+        super().__init__(id_)
+
+    def __str__(self):
+        return '[RPROXY Record ID:{}] {} -> {}'.format(
+            self.id_, self.host, self.upstream
+        )
+
+    def update(self, host=None, upstream=None):
+        '''
+        :param host: hostname
+        :type host: str or None
+        :param upstream: upstream hostname
+        :type upstream: str or None
+        '''
+        with DB.connect(**config.RDB_INFO) as cursor:
+            cursor.execute(
+                'UPDATE rproxy '
+                'SET host=%s, upstream=%s '
+                'WHERE id=%s;',
+                (
+                    host if host else self.host,
+                    upstream if upstream else self.upstream
+                )
+            )
+        return self
+
+
 def params(require=[], option=[]):
     '''
     :decorator: Get form HTTP form parameters.
