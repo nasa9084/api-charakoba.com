@@ -13,6 +13,7 @@ put = app.put
 delete = app.delete
 error = app.error
 
+
 @get('/')
 def ping():
     return {'status': 'LIVE'}
@@ -34,6 +35,7 @@ def get_record_from_id(id_):
 def post_record(user, params):
     record = ReverseProxyRecords().add(**params)
     return {'id': str(record.id_)}
+
 
 @put('/record/<id_:int>')
 @Service.auth
