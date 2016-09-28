@@ -59,7 +59,7 @@ def delete_record(user, id_):
 @error(401)
 @error(404)
 @error(405)
-def error404(err):
+def error(err):
     return json.dumps({'message': err.body})
 
 
