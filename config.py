@@ -1,16 +1,19 @@
+#!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-TOKEN_PREFIX = 'chapi',
-APIKEY_TTL = 24  # hours
-RDB_INFO = dict(
-    host='localhost',
-    db='charakoba_api',
-    user='',
-    passwd='',
-    charset='utf8'
-)
-REDIS_INFO = dict(
-    host='localhost',
-    port=6389,
-    db=0
-)
+token_prefix = 'chapi'
+token_ttl = 24
+
+mysql = {
+    'host': 'localhost',
+    'db': 'database_name',
+    'user': 'user_name',
+    'passwd': 'password',
+    'charset': 'utf8'
+}
+
+redis = {
+    'host': 'localhost',
+    'port': 6389,
+    'db': 0
+}

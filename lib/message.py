@@ -1,0 +1,7 @@
+AUTH_ERROR = 'Authentication Error'
+PARAM_ERROR = 'Parameter Not Valid'
+PERMISSION_ERROR = 'Permission Error'
+RECORD_NOT_FOUND_ERROR = 'Record Not Found'
+TOKEN_ERROR = 'Token Not Valid'
+USER_NOT_ACTIVATED_ERROR = 'User Not Activated'
+USER_NOT_FOUND_ERROR = 'User Not Found'
