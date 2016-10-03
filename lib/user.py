@@ -75,11 +75,7 @@ class User(object):
         self.is_active = bool(row['is_active'])
 
     def __repr__(self):
-        return json.dumps({
-            "id": self.id_,
-            "role": self.role.value,
-            "is_active": self.is_active
-        })
+        return self.__class__.__name__ + '({})'.format(self.id_)
 
     def password_auth(self, password):
         '''Return True if given password is valid'''
