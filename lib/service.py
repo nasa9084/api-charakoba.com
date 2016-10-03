@@ -66,6 +66,42 @@ class Service(object):
         return outer
 
     @staticmethod
+    def require_param(*requirements):
+        '''Decorator Method Check the Request Parameter'''
+        from lib.exceptions import ParameterRequirementsError
+
+        def outer(func):
+            @functools.wraps(func)
+            def inner(*a, **kw):
+                form = request.params
+                params = {}
+                for key in requirements:
+                    assert type(key) == str
+                    if key not in form:
+                        raise ParameterRequirementsError
+                    params[key] = form[key]
+                return func(requirements=params, *a, **kw)
+            return inner
+        return outer
+
+    @staticmethod
+    def option_param(*options):
+        '''Decorator Method Check the Request Parameter'''
+        def outer(func):
+            @functools.wraps(func)
+            def inner(*a, **kw):
+                form = reuqest.params
+                params = {}
+                for key in options:
+                    assert type(key) == str
+                    if key in form:
+                        params[key] = form[key]
+                return func(options=params, *a, **kw)
+            return inner
+        return outer
+
+
+    @staticmethod
     def _get_user_id_from_token(token):
         '''Get User ID From Token'''
         from lib.exceptions import TokenError
