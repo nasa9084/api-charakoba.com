@@ -53,7 +53,7 @@ class User(object):
                 'VALUES (%s, %s, %s);',
                 (username, Password(password), Role(role))
             )
-        return cursor.lastrowid
+        return cls(cursor.lastrowid)
 
     def __init__(self, id_):
         from lib.exceptions import UserNotFoundError
