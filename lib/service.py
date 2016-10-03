@@ -42,7 +42,7 @@ class Service(object):
             token = request.params.get('token')
             if token is None:
                 raise TokenError
-            user = User(Service.get_user_id_from_token(token))
+            user = User(Service._get_user_id_from_token(token))
             if not user.is_active:
                 raise UserNotActivatedError
             return func(user=user, *a, **kw)
@@ -66,7 +66,7 @@ class Service(object):
         return outer
 
     @staticmethod
-    def get_user_id_from_token(token):
+    def _get_user_id_from_token(token):
         '''Get User ID From Token'''
         from lib.exceptions import TokenError
 
