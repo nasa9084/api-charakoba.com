@@ -50,7 +50,8 @@ class Service(object):
 
     @staticmethod
     def role(role):
-        '''Decorator Method Checking Role'''
+        '''Decorator Method Checking Role
+        Use after auth() decorator'''
         from lib.exceptions import AuthenticationError
 
         def outer(func):
