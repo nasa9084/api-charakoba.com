@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
-from superclass import BaseRecord
+from lib.superclass import BaseRecord
 
 
 class DNSRecord(BaseRecord):
