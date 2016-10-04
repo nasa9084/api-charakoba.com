@@ -60,7 +60,7 @@ class BaseRecord(object):
     def __str__(self):
         return json.dumps(self.__dict__)
 
-    def update(self, *kw):
+    def update(self, **kw):
         '''Update Record'''
         # set new value to member if new value in kw
         for column_name in self.columns:
@@ -72,7 +72,7 @@ class BaseRecord(object):
                 'SET {update_columns} '
                 'WHERE id=%s;'.format(
                     tablename=self.tablename,
-                    update_columns=', '.join([c + '=%' for c in self.columns])
+                    update_columns=', '.join([c + '=%s' for c in self.columns])
                 ),
                 [self.__dict__[c] for c in self.columns] + [self.id_]
             )
