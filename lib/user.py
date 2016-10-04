@@ -116,7 +116,7 @@ class User(object):
                 'UPDATE users '
                 'SET username=%s, password=%s, role=%s '
                 'WHERE id=%s;',
-                (self.username, self.password, self.role, self.id_)
+                (self.username, str(self.password), self.role.value, self.id_)
             )
 
     def get_token(self):
