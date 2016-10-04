@@ -1,0 +1,46 @@
+{
+    "tables": [
+        {
+            "name": "users",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "primary key": true,
+                    "auto_increment": true
+                }, {
+                    "name": "username",
+                    "type": "varchar",
+                    "length": 64,
+                    "not null": true
+                }, {
+                    "name": "password",
+                    "type": "varchar",
+                    "length": 512,
+                    "not null": true
+                }, {
+                    "name": "role",
+                    "type": "enum",
+                    "list": [
+                        "admin",
+                        "user"
+                    ],
+                    "not null": true,
+                    "default": "'user'"
+                }, {
+                    "name": "is_active",
+                    "type": "bool",
+                    "not null": true,
+                    "default": 0
+                }, {
+                    "name": "is_delete",
+                    "type": "bool",
+                    "not null": true,
+                    "default": 0
+                }
+            ],
+            "engine": "InnoDB",
+            "charset": "utf8"
+        }
+    ]
+}
