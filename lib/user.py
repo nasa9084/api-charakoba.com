@@ -4,7 +4,7 @@
 from enum import Enum
 import json
 import pymysql as DB
-from pymysql.cusors import DictCursor as DC
+from pymysql.cursors import DictCursor as DC
 from redis import Redis
 
 import config
