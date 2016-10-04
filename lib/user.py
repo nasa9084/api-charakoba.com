@@ -33,6 +33,12 @@ class Password(object):
         else:
             return str_or_bytes
 
+    @classmethod
+    def get_instance(cls, password):
+        instance = cls('')
+        instance.password = password
+        return instance
+
 
 class Role(Enum):
     '''Service User Role Class
