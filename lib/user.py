@@ -77,7 +77,7 @@ class User(object):
             raise UserNotFoundError
         self.username = row['username']
         self.password = Password(row['password'])
-        self.role = Role(row['role'])
+        self.role = Role[row['role']]
         self.is_active = bool(row['is_active'])
 
     def __repr__(self):
