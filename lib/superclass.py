@@ -25,7 +25,7 @@ class BaseRecord(object):
             cursor.execute(
                 'INSERT INTO {tablename} '
                 '({columns}) '
-                'VALUES ({placeholders}):'.format(
+                'VALUES ({placeholders});'.format(
                     tablename=cls.tablename,
                     columns=', '.join(cls.columns),
                     placeholders=', '.join(['%s' for _ in cls.columns]),
