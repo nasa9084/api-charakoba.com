@@ -43,6 +43,7 @@ class BaseRecord(object):
                 'SELECT {columns} '
                 'FROM {tablename} '
                 'WHERE id=%s;'.format(
+                    tablename=self.tablename,
                     columns=', '.join(self.columns)
                 ),
                 (self.id_, )
