@@ -41,6 +41,63 @@
             ],
             "engine": "InnoDB",
             "charset": "utf8"
+        }, {
+            "name": "dns",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "primary key": true,
+                    "auto_increment": true
+                }, {
+                    "name": "type",
+                    "type": "varchar",
+                    "length": 16,
+                    "not null": true
+                }, {
+                    "name": "host",
+                    "type": "varchar",
+                    "length": 64,
+                    "not null": true
+                }, {
+                    "name": "domain",
+                    "type": "varchar",
+                    "length": 64,
+                    "not null": true
+                }, {
+                    "name": "ipv4_addr",
+                    "type": "varchar",
+                    "length": 15,
+                    "not null": true
+                }
+            ],
+            "unique": {
+                "columns": [
+                    "host",
+                    "domain"
+                ]
+            }
+        }, {
+            "name": "rproxy",
+            "columns": [
+                {
+                    "name": "id",
+                    "type": "int",
+                    "primary key": true,
+                    "auto_increment": true
+                }, {
+                    "name": "host",
+                    "type": "varchar",
+                    "length": 64,
+                    "not null": true,
+                    "unique": true
+                }, {
+                    "name": "upstream",
+                    "type": "varchar",
+                    "length": 64,
+                    "not null": true
+                }
+            ]
         }
     ]
 }
