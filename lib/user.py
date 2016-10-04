@@ -17,7 +17,7 @@ class Password(object):
 
     def __init__(self, password, alg=sha512):
         self.alg = alg
-        self.password = self.alg(password).hexdigest()
+        self.password = self.alg(self._to_bytes(password)).hexdigest()
 
     def __eq__(self, other):
         if other is None or not type(other) == type(self):
@@ -26,6 +26,12 @@ class Password(object):
 
     def __repr__(self):
         return self.password
+
+    def _to_bytes(self, str_or_bytes):
+        if type(str_or_bytes) == str:
+            return str_or_bytes.encode('utf-8')
+        else:
+            return str_or_bytes
 
 
 class Role(Enum):
