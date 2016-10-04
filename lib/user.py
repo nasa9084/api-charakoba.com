@@ -110,7 +110,7 @@ class User(object):
         if password is not None:
             self.password = Password(password)
         if role is not None:
-            self.role = Role(role)
+            self.role = Role[role]
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'UPDATE users '
