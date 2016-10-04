@@ -65,7 +65,7 @@ class BaseRecord(object):
         # set new value to member if new value in kw
         for column_name in self.columns:
             if column_name in kw:
-                self[column_name] = kw[column_name]
+                self.__dict__[column_name] = kw[column_name]
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'UPDATE {tablename} '
