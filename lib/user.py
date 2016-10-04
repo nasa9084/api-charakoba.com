@@ -82,7 +82,7 @@ class User(object):
         if not row:
             raise UserNotFoundError
         self.username = row['username']
-        self.password = Password(row['password'])
+        self.password = Password.get_instance(row['password'])
         self.role = Role[row['role']]
         self.is_active = bool(row['is_active'])
 
