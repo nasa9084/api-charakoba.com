@@ -56,14 +56,14 @@ class Role(Enum):
 class User(object):
     '''Service User Class'''
     @classmethod
-    def create(cls, username, password, role=Role.user):
+    def create(cls, username, password, role=Role.user.name):
         '''this method create New User'''
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'INSERT INTO users '
                 '(username, password, role) '
                 'VALUES (%s, %s, %s);',
-                (username, str(Password(password)), str(Role(role).value))
+                (username, str(Password(password)), role)
             )
         return cls(cursor.lastrowid)
 
