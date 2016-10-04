@@ -11,6 +11,9 @@ from user import User, Role
 
 class UserTestCase(TestCase):
     def setUp(self):
+        shell.run(["sed", "-rie", "s/database_name/charakoba_api/", "config.py"])
+        shell.run(["sed", "-rie", "s/user_name/root/", "config.py"])
+        shell.run(["sed", "-rie","s/password//", "config.py"])
         cmd = [
             "mysql",
             "-u", "root",
