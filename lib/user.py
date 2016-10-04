@@ -57,7 +57,7 @@ class User(object):
                 'INSERT INTO users '
                 '(username, password, role) '
                 'VALUES (%s, %s, %s);',
-                (username, str(Password(password)), str(Role(role)))
+                (username, str(Password(password)), str(Role(role).value))
             )
         return cls(cursor.lastrowid)
 
