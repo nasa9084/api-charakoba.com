@@ -75,13 +75,15 @@ class Service(object):
             @functools.wraps(func)
             def inner(*a, **kw):
                 form = request.params
-                params = {}
+                params = Parameters()
                 for key in requirements:
                     assert type(key) == str
                     if key not in form:
                         raise ParameterRequirementsError
                     params[key] = form[key]
-                return func(requirements=params, *a, **kw)
+                if kw.get('params'):
+                    params = params.update(kw['params'])
+                return func(params=params, *a, **kw)
             return inner
         return outer
 
@@ -92,12 +94,14 @@ class Service(object):
             @functools.wraps(func)
             def inner(*a, **kw):
                 form = reuqest.params
-                params = {}
+                params = Parameter()
                 for key in options:
                     assert type(key) == str
                     if key in form:
                         params[key] = form[key]
-                return func(options=params, *a, **kw)
+                if kw.get('params'):
+                    params = params.update(kw['params'])
+                return func(params=params, *a, **kw)
             return inner
         return outer
 
@@ -112,3 +116,11 @@ class Service(object):
         if id_ is None:
             raise TokenError
         return id_
+
+
+class Parameters(dict):
+    def __getattribute__(self, key):
+        return self[key]
+
+    def __setattribute__(self, key, value):
+        self[key] = value
