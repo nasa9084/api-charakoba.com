@@ -1,6 +1,10 @@
 #!/usr/bin/env python
 # -*- coding:utf-8 -*-
 
+output_dir = 'output'
+dns_conf_filename = 'dns.zone'
+rproxy_conf_filename = '{host}.proxy.conf'
+
 token_prefix = 'chapi'
 token_ttl = 24
 
