@@ -19,7 +19,7 @@ class Service(object):
 
         @functools.wraps(func)
         def inner(*a, **kw):
-            id_ = request.params.get('id')
+            id_ = request.params.get('id') or kw.get('id_')
             password = request.params.get('password')
             if id_ is None or password is None:
                 raise AuthenticationError
