@@ -6,7 +6,7 @@ import functools
 from redis import Redis
 
 import config
-from lib.user import User
+from lib.user import User, Role
 
 
 class Service(object):
@@ -60,7 +60,7 @@ class Service(object):
                 user = kw.get('user')
                 if user is None:
                     raise AuthenticationError
-                if not user.role <= role:
+                if not user.role <= Role[role]:
                     raise AuthenticationError
                 return func(*a, **kw)
             return inner
