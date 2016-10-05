@@ -48,6 +48,7 @@ def update_user(user, params):
 @Service.token
 def delete_user(user):
     user.delete()
+    return message('Success')
 
 
 @app.error(400)
