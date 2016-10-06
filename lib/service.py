@@ -87,8 +87,8 @@ class Service(object):
         def outer(func):
             @functools.wraps(func)
             def inner(*a, **kw):
-                form = reuqest.params
-                params = Parameter()
+                form = request.params
+                params = Parameters()
                 for key in options:
                     assert type(key) == str
                     if key in form:
