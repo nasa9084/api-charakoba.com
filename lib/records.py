@@ -7,7 +7,7 @@ from lib.superclass import BaseRecord
 class DNSRecord(BaseRecord):
     '''DNS Record Class'''
     tablename = 'dns'
-    columns = ['type', 'host', 'domain', 'ipv4_addr']
+    columns = ['type', 'host', 'ipv4_addr']
 
 
 class ReverseProxyRecord(BaseRecord):
