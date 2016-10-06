@@ -15,7 +15,6 @@ class Service(object):
     def auth(func):
         '''Password-Base Authentication Decorator'''
         from lib.exceptions import AuthenticationError
-        from lib.exceptions import UserNotActivatedError
 
         @functools.wraps(func)
         def inner(*a, **kw):
@@ -26,8 +25,6 @@ class Service(object):
             user = User(id_)
             if not user.password_auth(password):
                 raise AuthenticationError
-            if not user.is_active:
-                raise UserNotActivatedError
             return func(user=user, *a, **kw)
         return inner
 
@@ -35,7 +32,6 @@ class Service(object):
     def token(func):
         '''Token-base Authentication Decorator'''
         from lib.exceptions import TokenError
-        from lib.exceptions import UserNotActivatedError
 
         @functools.wraps(func)
         def inner(*a, **kw):
@@ -43,8 +39,6 @@ class Service(object):
             if token is None:
                 raise TokenError
             user = User(Service._get_user_id_from_token(token))
-            if not user.is_active:
-                raise UserNotActivatedError
             return func(user=user, *a, **kw)
         return inner
 

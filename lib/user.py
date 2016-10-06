@@ -128,6 +128,10 @@ class User(object):
 
     def get_token(self):
         from uuid import uuid4
+        from lib.exceptions import UserNotActivatedError
+
+        if not self.is_active:
+            raise UserNotActivatedError
         redis = Redis(**config.redis)
         if redis.get(self.token):
             return self.token
