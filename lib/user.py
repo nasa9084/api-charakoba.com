@@ -85,6 +85,7 @@ class User(object):
         self.password = Password.get_instance(row['password'])
         self.role = Role[row['role']]
         self.is_active = bool(row['is_active'])
+        self.token = _get_id_token_dict().get(str(self.id_))
 
     def __repr__(self):
         return self.__class__.__name__ + '({})'.format(self.id_)
@@ -133,7 +134,7 @@ class User(object):
         if not self.is_active:
             raise UserNotActivatedError
         redis = Redis(**config.redis)
-        if redis.get(self.__dict__.get('token')):
+        if redis.get(self.token):
             return self.token
         new_token = config.token_prefix + '-' + str(uuid4())
         redis.setex(new_token, self.id_, config.token_ttl * 60 * 60)
@@ -149,3 +150,19 @@ class User(object):
                 (self.id_,)
             )
         self.__dict__ = {}
+
+
+def _get_id_token_dict():
+    redis = Redis(**config.redis)
+    token_dict = {}
+    for k in redis.keys('*'):
+        token_dict[redis.get(k).decode()] = k.decode()
+    return token_dict
+
+
+def _token_id_dict():
+    redis = Redis(**config.redis)
+    token_dict = {}
+    for k in redis.keys('*'):
+        token_dict[k.decode()] = redis.get(k).decode()
+    return token_dict
