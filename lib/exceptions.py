@@ -49,7 +49,7 @@ class TokenError(CharakobaError):
 
 class UserNotActivatedError(CharakobaError):
     default_status = 403
-    default_body = msg.USER_NOT_FOUND_ERROR
+    default_body = msg.USER_NOT_ACTIVATED_ERROR
 
 
 class UserNotFoundError(HTTPError):
