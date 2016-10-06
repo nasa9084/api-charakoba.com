@@ -113,6 +113,7 @@ class Service(object):
 
 
 class Parameters(dict):
+    '''HTTP Parameters dict-like Object'''
     def __getattribute__(self, key):
         return self[key]
 
