@@ -15,6 +15,11 @@ def index():
     return message('Hello')
 
 
+@app.get('/json')
+def list_record():
+    return DNSRecord.json()
+
+
 @app.post('/')
 @Service.token
 @Service.role('admin')
