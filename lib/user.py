@@ -47,10 +47,10 @@ class Role(Enum):
     user = 2
 
     def __lt__(self, other):
-        return self.value < self.other
+        return self.value < Role(other).value
 
     def __le__(self, other):
-        return self.value <= self.other
+        return self.value <= Role(other).value
 
 
 class User(object):
