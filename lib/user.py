@@ -156,7 +156,9 @@ def _get_id_token_dict():
     redis = Redis(**config.redis)
     token_dict = {}
     for k in redis.keys('*'):
-        token_dict[redis.get(k).decode()] = k.decode()
+        k = k.decode()
+        if k.startswith(config.token_prefix):
+            token_dict[redis.get(k).decode()] = k
     return token_dict
 
 
@@ -164,5 +166,7 @@ def _token_id_dict():
     redis = Redis(**config.redis)
     token_dict = {}
     for k in redis.keys('*'):
-        token_dict[k.decode()] = redis.get(k).decode()
+        k = k.decode()
+        if k.startswith(config.token_prefix):
+            token_dict[k] = redis.get(k).decode()
     return token_dict
