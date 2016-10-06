@@ -105,7 +105,7 @@ class User(object):
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'UPDATE users '
-                'SET is_activate=1 '
+                'SET is_active=1 '
                 'WHERE id=%s;',
                 (self.id_,)
             )
