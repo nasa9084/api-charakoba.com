@@ -133,7 +133,7 @@ class User(object):
         if not self.is_active:
             raise UserNotActivatedError
         redis = Redis(**config.redis)
-        if redis.get(self.token):
+        if redis.get(self.__dict__.get('token')):
             return self.token
         new_token = config.token_prefix + '-' + str(uuid4())
         redis.setex(new_token, self.id_, config.token_ttl * 60 * 60)
