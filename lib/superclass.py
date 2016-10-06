@@ -14,6 +14,19 @@ class BaseRecord(object):
     columns = []
 
     @classmethod
+    def json(cls):
+        '''List up All Records'''
+        with DB.connect(cursorclass=DC, **config.mysql) as cursor:
+            cursor.execute(
+                'SELECT id '
+                'FROM {tablename};'.format(tablename=cls.tablename)
+            )
+            rows = cursor.fetchall()
+        records = []
+        for row in rows:
+            records.append(str(cls(row['id'])))
+
+    @classmethod
     def create(cls, **column_values):
         '''Create new Record'''
         bind_values = []
