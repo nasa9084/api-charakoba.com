@@ -20,7 +20,7 @@ def index():
 @Service.role('admin')
 @Service.require_param('host', 'upstream')
 def add_record(user, params):
-    record = ReverseProxyRecord(**params)
+    record = ReverseProxyRecord.create(**params)
     return str(record)
 
 
