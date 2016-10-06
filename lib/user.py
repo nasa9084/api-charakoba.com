@@ -92,7 +92,7 @@ class User(object):
     def __str__(self):
         return json.dumps({
             "id": self.id_,
-            "role": self.role,
+            "role": self.role.name,
             "is_active": self.is_active
         })
 
