@@ -58,25 +58,15 @@
                     "name": "host",
                     "type": "varchar",
                     "length": 64,
-                    "not null": true
-                }, {
-                    "name": "domain",
-                    "type": "varchar",
-                    "length": 64,
-                    "not null": true
+                    "not null": true,
+                    "unique": true
                 }, {
                     "name": "ipv4_addr",
                     "type": "varchar",
                     "length": 15,
                     "not null": true
                 }
-            ],
-            "unique": {
-                "columns": [
-                    "host",
-                    "domain"
-                ]
-            }
+            ]
         }, {
             "name": "rproxy",
             "columns": [
