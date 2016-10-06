@@ -25,6 +25,7 @@ class BaseRecord(object):
         records = []
         for row in rows:
             records.append(str(cls(row['id'])))
+        return json.dumps(records)
 
     @classmethod
     def create(cls, **column_values):
