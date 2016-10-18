@@ -24,7 +24,7 @@ def output_dns():
 
     serial = date.today().strftime('%Y%m%d')
     with DB.connect(cursorclass=DC, **config.mysql) as cursor:
-        cursor.execute('SELECT type, host, domain, ipv4_addr FROM dns;')
+        cursor.execute('SELECT type, host, ipv4_addr FROM dns;')
         rows = cursor.fetchall()
     if not rows:
         raise RecordNotFoundError
