@@ -134,7 +134,9 @@ class User(object):
         if not self.is_active:
             raise UserNotActivatedError
         redis = Redis(**config.redis)
-        if not redis.ping():
+        try:
+            redis.ping()
+        except:
             raise RedisConnectionError
         if redis.get(self.token):
             return self.token
@@ -158,7 +160,9 @@ def _get_id_token_dict():
     from lib.exceptions import RedisConnectionError
 
     redis = Redis(**config.redis)
-    if not redis.ping():
+    try:
+        redis.ping()
+    except:
         raise RedisConnectionError
     token_dict = {}
     for k in redis.keys('*'):
@@ -172,7 +176,9 @@ def _token_id_dict():
     from lib.exceptions import RedisConnectionError
 
     redis = Redis(**config.redis)
-    if not redis.ping():
+    try:
+        redis.ping()
+    except:
         raise RedisConnectionError
     token_dict = {}
     for k in redis.keys('*'):
