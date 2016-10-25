@@ -129,11 +129,13 @@ class User(object):
 
     def get_token(self):
         from uuid import uuid4
-        from lib.exceptions import UserNotActivatedError
+        from lib.exceptions import UserNotActivatedError, RedisConnectionError
 
         if not self.is_active:
             raise UserNotActivatedError
         redis = Redis(**config.redis)
+        if not redis.ping():
+            raise RedisConnectionError
         if redis.get(self.token):
             return self.token
         new_token = config.token_prefix + '-' + str(uuid4())
@@ -153,7 +155,11 @@ class User(object):
 
 
 def _get_id_token_dict():
+    from lib.exceptions import RedisConnectionError
+
     redis = Redis(**config.redis)
+    if not redis.ping():
+        raise RedisConnectionError
     token_dict = {}
     for k in redis.keys('*'):
         k = k.decode()
@@ -163,7 +169,11 @@ def _get_id_token_dict():
 
 
 def _token_id_dict():
+    from lib.exceptions import RedisConnectionError
+
     redis = Redis(**config.redis)
+    if not redis.ping():
+        raise RedisConnectionError
     token_dict = {}
     for k in redis.keys('*'):
         k = k.decode()

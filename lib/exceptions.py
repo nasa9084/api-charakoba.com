@@ -41,6 +41,10 @@ class RecordNotFoundError(CharakobaError):
     default_status = 404
     default_body = msg.RECORD_NOT_FOUND_ERROR
 
+class RedisConnectionError(CharakobaError):
+    default_status = 500
+    default_body = msg.REDIS_CONNECTION_ERROR
+
 
 class TokenError(CharakobaError):
     default_status = 401
