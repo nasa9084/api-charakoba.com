@@ -12,7 +12,6 @@ from lib.exceptions import RecordNotFoundError
 
 
 def main():
-    _reset()
     output_dns()
     output_rproxy()
 
@@ -59,12 +58,6 @@ def output_rproxy():
                     upstream=row['upstream']
                 ) + '\n'
             )
-
-
-def _reset():
-    if os.path.exists(config.output_dir):
-        shutil.rmtree(config.output_dir)
-    os.mkdir(config.output_dir)
 
 
 def _load_template(template_name):
