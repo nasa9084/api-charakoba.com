@@ -2,7 +2,7 @@
 # -*- coding:utf-8 -*-
 
 output_dir = 'output'
-dns_conf_filename = 'dns.zone'
+dns_conf_filename = 'charakoba.com.db'
 rproxy_conf_filename = '{host}.proxy.conf'
 
 token_prefix = 'chapi'
