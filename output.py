@@ -12,7 +12,7 @@ from lib.exceptions import RecordNotFoundError
 
 
 def main():
-    _reset()
+#    _reset()
     output_dns()
     output_rproxy()
 
