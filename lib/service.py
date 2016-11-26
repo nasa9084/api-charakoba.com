@@ -18,11 +18,11 @@ class Service(object):
 
         @functools.wraps(func)
         def inner(*a, **kw):
-            id_ = request.params.get('id') or kw.get('id_')
+            username = request.params.get('username') or kw.get('username')
             password = request.params.get('password')
-            if id_ is None or password is None:
+            if username is None or password is None:
                 raise AuthenticationError
-            user = User(id_)
+            user = User(username)
             if not user.password_auth(password):
                 raise AuthenticationError
             return func(user=user, *a, **kw)
@@ -38,7 +38,7 @@ class Service(object):
             token = request.params.get('token')
             if token is None:
                 raise TokenError
-            user = User(Service._get_user_id_from_token(token))
+            user = User(Service._get_username_from_token(token))
             return func(user=user, *a, **kw)
         return inner
 
@@ -101,15 +101,15 @@ class Service(object):
 
 
     @staticmethod
-    def _get_user_id_from_token(token):
-        '''Get User ID From Token'''
+    def _get_username_from_token(token):
+        '''Get Username From Token'''
         from lib.exceptions import TokenError
 
         redis = Redis(**config.redis)
-        id_ = redis.get(token)
-        if id_ is None:
+        username = redis.get(token)
+        if username is None:
             raise TokenError
-        return id_
+        return username
 
 
 class Parameters(dict):

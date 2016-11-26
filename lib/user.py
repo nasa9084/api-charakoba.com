@@ -67,32 +67,31 @@ class User(object):
             )
         return cls(cursor.lastrowid)
 
-    def __init__(self, id_):
+    def __init__(self, username):
         from lib.exceptions import UserNotFoundError
 
-        self.id_ = id_
+        self.username = username
         with DB.connect(cursorclass=DC, **config.mysql) as cursor:
             cursor.execute(
-                'SELECT username, password, role, is_active '
+                'SELECT password, role, is_active '
                 'FROM users '
-                'WHERE id=%s;',
-                (self.id_,)
+                'WHERE username=%s;',
+                (self.username,)
             )
             row = cursor.fetchone()
         if not row:
             raise UserNotFoundError
-        self.username = row['username']
         self.password = Password.get_instance(row['password'])
         self.role = Role[row['role']]
         self.is_active = bool(row['is_active'])
-        self.token = _get_id_token_dict().get(str(self.id_))
+        self.token = _get_username_token_dict().get(str(self.uname))
 
     def __repr__(self):
-        return self.__class__.__name__ + '({})'.format(self.id_)
+        return self.__class__.__name__ + '({})'.format(self.username)
 
     def __str__(self):
         return json.dumps({
-            "id": self.id_,
+            "username": self.username,
             "role": self.role.name,
             "is_active": self.is_active
         })
@@ -107,14 +106,12 @@ class User(object):
             cursor.execute(
                 'UPDATE users '
                 'SET is_active=1 '
-                'WHERE id=%s;',
-                (self.id_,)
+                'WHERE username=%s;',
+                (self.username,)
             )
 
-    def update(self, username=None, password=None, role=None):
+    def update(self, password=None, role=None):
         '''Update User Info'''
-        if username is not None:
-            self.username = username
         if password is not None:
             self.password = Password(password)
         if role is not None:
@@ -122,9 +119,9 @@ class User(object):
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'UPDATE users '
-                'SET username=%s, password=%s, role=%s '
-                'WHERE id=%s;',
-                (self.username, str(self.password), self.role.value, self.id_)
+                'SET password=%s, role=%s '
+                'WHERE username=%s;',
+                (str(self.password), self.role.value, self.username)
             )
 
     def get_token(self):
@@ -141,7 +138,7 @@ class User(object):
         if redis.get(self.token):
             return self.token
         new_token = config.token_prefix + '-' + str(uuid4())
-        redis.setex(new_token, self.id_, config.token_ttl * 60 * 60)
+        redis.setex(new_token, self.username, config.token_ttl * 60 * 60)
         self.token = new_token
         return self.token
 
@@ -150,13 +147,13 @@ class User(object):
         with DB.connect(**config.mysql) as cursor:
             cursor.execute(
                 'DELETE FROM users '
-                'WHERE id=%s;',
-                (self.id_,)
+                'WHERE username=%s;',
+                (self.username,)
             )
         self.__dict__ = {}
 
 
-def _get_id_token_dict():
+def _get_username_token_dict():
     from lib.exceptions import RedisConnectionError
 
     redis = Redis(**config.redis)
@@ -172,7 +169,7 @@ def _get_id_token_dict():
     return token_dict
 
 
-def _token_id_dict():
+def _token_username_dict():
     from lib.exceptions import RedisConnectionError
 
     redis = Redis(**config.redis)
