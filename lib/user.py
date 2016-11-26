@@ -84,7 +84,7 @@ class User(object):
         self.password = Password.get_instance(row['password'])
         self.role = Role[row['role']]
         self.is_active = bool(row['is_active'])
-        self.token = _get_username_token_dict().get(str(self.uname))
+        self.token = _get_username_token_dict().get(str(self.username))
 
     def __repr__(self):
         return self.__class__.__name__ + '({})'.format(self.username)
