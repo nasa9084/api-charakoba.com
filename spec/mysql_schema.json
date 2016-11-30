@@ -4,15 +4,10 @@
             "name": "users",
             "columns": [
                 {
-                    "name": "id",
-                    "type": "int",
-                    "primary key": true,
-                    "auto_increment": true
-                }, {
                     "name": "username",
                     "type": "varchar",
                     "length": 64,
-                    "not null": true
+                    "primary key": true
                 }, {
                     "name": "password",
                     "type": "varchar",
