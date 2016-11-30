@@ -24,7 +24,7 @@ class BaseRecord(object):
             rows = cursor.fetchall()
         records = []
         for row in rows:
-            records.append(cls(row['id']))
+            records.append(str(cls(row['id'])))
         return json.dumps(records)
 
     @classmethod
@@ -72,7 +72,7 @@ class BaseRecord(object):
         return self.__class__.__name__ + '({id_})'.formart(id_=self.id_)
 
     def __str__(self):
-        return json.dumps(self.__dict__)
+        return str(self.__dict__)
 
     def update(self, **kw):
         '''Update Record'''
