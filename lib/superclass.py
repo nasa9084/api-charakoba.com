@@ -22,10 +22,7 @@ class BaseRecord(object):
                 'FROM {tablename};'.format(tablename=cls.tablename)
             )
             rows = cursor.fetchall()
-        records = []
-        for row in rows:
-            records.append(str(cls(row['id'])))
-        return json.dumps(records)
+        return json.dumps(rows)
 
     @classmethod
     def create(cls, **column_values):
