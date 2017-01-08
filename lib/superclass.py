@@ -24,7 +24,7 @@ class BaseRecord(object):
             rows = cursor.fetchall()
         records = []
         for row in rows:
-            records.append(cls(row['id']).__dir__)
+            records.append(cls(row['id']).__dict__)
         return json.dumps(records)
 
     @classmethod
